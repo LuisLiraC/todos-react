@@ -5,6 +5,7 @@ import { StaticRouter } from 'react-router-dom'
 import { serverRoutes } from '../../client/routes/serverRoutes'
 import { Layout } from '../../client/containers/Layout'
 import { ServerStyleSheet } from 'styled-components'
+import Context from '../../client/Context'
 
 const setResponse = (html, styles, manifest) => {
   const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js'
@@ -30,9 +31,11 @@ export const renderApp = (req, res) => {
   const html = renderToString(
     stylesSheet.collectStyles(
       <StaticRouter location={req.url} context={{}}>
-        <Layout>
-          {renderRoutes(serverRoutes)}
-        </Layout>
+        <Context.Provider>
+          <Layout>
+            {renderRoutes(serverRoutes)}
+          </Layout>
+        </Context.Provider>
       </StaticRouter>
     )
   )

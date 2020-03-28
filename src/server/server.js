@@ -5,6 +5,8 @@ import config from './config'
 import { renderApp } from './routes/ssr'
 import getManifest from './getManifest'
 import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
+import users from './routes/users'
 
 const app = express()
 app.use(cookieParser())
@@ -20,6 +22,7 @@ if (config.env === 'development') {
 
   app.use(webpackDevMiddleware(compiler, serverConfig))
   app.use(webpackHotMiddleware(compiler))
+  app.use(morgan('dev'))
 } else {
   console.log('\x1b[36m%s\x1b[0m', `[config] ${config.env}`)
 
@@ -33,6 +36,7 @@ if (config.env === 'development') {
   app.disable('x-powered-by')
 }
 
+users(app)
 app.get('*', renderApp)
 
 app.listen(config.port, () => {
