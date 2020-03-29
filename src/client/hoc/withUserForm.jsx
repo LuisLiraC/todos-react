@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
+import Redirect from '../components/RedirectHome'
 import axios from 'axios'
 
 
 export const withUserForm = (WrappedComponent, endpoint, btnText) => {
-  return ({ activateAuth }) => {
+  return ({ isAuth, activateAuth }) => {
     const [form, setForm] = useState({})
 
     const handleInput = e => {
@@ -18,11 +19,12 @@ export const withUserForm = (WrappedComponent, endpoint, btnText) => {
     const handleSubmit = async e => {
       e.preventDefault()
       try {        
-        const { data } = await axios(`/user/${endpoint}`, {
+        const { data: { response } } = await axios(`/user/${endpoint}`, {
           method: 'POST',
           data: form,
         })
-        console.log(data)
+        window.localStorage.setItem('token', response)
+        window.location.href = '/'
         activateAuth()
       } catch (error) {
         console.log(error.message)
@@ -31,6 +33,9 @@ export const withUserForm = (WrappedComponent, endpoint, btnText) => {
     }
 
     return (
+      isAuth ? (
+        <Redirect />
+      ) : (
       <WrappedComponent>
         <form onSubmit={handleSubmit} method="post">
           <Input
@@ -50,6 +55,7 @@ export const withUserForm = (WrappedComponent, endpoint, btnText) => {
           <Button type="submit" btnText={btnText} />
         </form>
       </WrappedComponent>
+      )
     )
   }
 }

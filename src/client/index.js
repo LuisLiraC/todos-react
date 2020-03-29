@@ -1,12 +1,12 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { hydrate } from 'react-dom'
 import { App } from './routes/App'
 import { Router } from 'react-router'
 import { createBrowserHistory } from 'history'
 import Context from './Context'
 const history = createBrowserHistory()
 
-ReactDOM.hydrate(
+hydrate(
   <Router history={history}>
     <Context.Provider>
       <App />
@@ -14,3 +14,4 @@ ReactDOM.hydrate(
   </Router>,
   document.getElementById('app')
 )
+

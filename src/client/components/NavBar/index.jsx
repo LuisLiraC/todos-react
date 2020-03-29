@@ -16,6 +16,16 @@ export const NavBar = () => {
             Other
           </Link>
         </li>
+        <li>
+          <Link to='/sign-in'>
+            Sign in
+          </Link>
+        </li>
+        <li>
+          <Link to='/sign-up'>
+            Sign up
+          </Link>
+        </li>
       </ol>
     </nav>
   )

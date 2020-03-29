@@ -1,6 +1,6 @@
 import { Hello } from '../containers/Hello'
-import { Other } from '../containers/Other'
 import { NotFound } from '../containers/NotFound'
+import Other from '../containers/Other'
 import Login from '../containers/Login'
 import Register from '../containers/Register'
 
